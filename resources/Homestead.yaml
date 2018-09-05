@@ -1,8 +1,10 @@
 ---
+name: vagrant-homestead-prestashop
 ip: "192.168.10.10"
 memory: 2048
 cpus: 1
 provider: virtualbox
+prestashop: 1.6.1
 
 authorize: ~/.ssh/id_rsa.pub
 
@@ -10,12 +12,13 @@ keys:
     - ~/.ssh/id_rsa
 
 folders:
-    - map: ~/code
+    - map: /code
       to: /home/vagrant/code
 
 sites:
-    - map: homestead.test
-      to: /home/vagrant/code/public
+    - map: prestashop.site
+      to: /home/vagrant/code
+      type: apache
 
 databases:
     - homestead

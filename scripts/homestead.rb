@@ -158,7 +158,7 @@ class Homestead
         end
       end
     end
-
+    
     # Register All Of The Configured Shared Folders
     if settings.include? 'folders'
       settings['folders'].each do |folder|
@@ -334,6 +334,15 @@ class Homestead
       end
     end
 
+    # Install Prestashop If Necessary
+    if settings.has_key?('prestashop') && settings['prestashop']
+      config.vm.provision 'shell' do |s|
+        s.name = "Installing Prestashop v#{settings['prestashop']}"
+        s.path = script_dir + '/install-prestashop.sh'
+        s.args = settings['prestashop']
+      end
+    end
+    
     # Install Elasticsearch If Necessary
     if settings.has_key?('elasticsearch') && settings['elasticsearch']
       config.vm.provision 'shell' do |s|
@@ -377,7 +386,6 @@ class Homestead
         s.path = script_dir + '/install-influxdb.sh'
       end
     end
-
 
     # Configure All Of The Configured Databases
     if settings.has_key?('databases')
